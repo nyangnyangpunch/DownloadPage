@@ -8,12 +8,12 @@ const app = express();
 app.use('/static', express.static(path.join(__dirname, '/static')))
 
 app.get('/',function (_req, res) {
-    fs.readFile('./list.html', function(err, data){
+    fs.readFile(path.join(__dirname, '/static/index.html'), function(err, data){
         res.writeHead(200, {'Content-Type':'text/html'});
 
         if (err) {
             console.error(err);
-            res.end(err);
+            res.end(err.toString());
         } else {
             res.end(data);
         }
