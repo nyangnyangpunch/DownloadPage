@@ -29,6 +29,7 @@
             }
 
             .wrap {
+                position: relative;
                 width: 100%;
                 height: 100%;
                 padding: 1rem;
@@ -44,6 +45,7 @@
                 padding: .5rem;
                 padding-left: 1rem;
                 background-color: #ffcc00;
+                z-index: 9999;
             }
 
             header.header .logo {
@@ -61,7 +63,6 @@
 
             header.header .title {
                 font-weight: bold;
-                font-size: 3rem;
                 line-height: 5rem;
                 margin-left: 1rem;
                 float: left;
@@ -69,7 +70,6 @@
 
             header.header .menu {
                 float: right;
-                margin-right: 1rem;
             }
 
             header.header .menu .menu-item {
@@ -79,7 +79,6 @@
                 height: 6rem;
                 line-height: 3rem;
                 padding: 1rem;
-                font-size: 1.5rem;
                 -webkit-transition: .3s;
                    -moz-transition: .3s;
                     -ms-transition: .3s;
@@ -93,8 +92,6 @@
             }
 
             .content {
-                position: absolute;
-                top: 7rem;
                 width: 100%;
                 -webkit-transition: .5s;
                    -moz-transition: .5s;
@@ -105,12 +102,18 @@
 
             .content.hide {
                 opacity: 0;
+                z-index: 100;
                 transform: translateY(100px);
+            }
+
+            .content.gone {
+                display: none;
             }
 
             .panel {
                 padding: 1.5rem;
                 border-radius: 5px;
+                background-color: #fff;
                 box-shadow: 0 0 5px rgba(0, 0, 0, .3);
             }
 
@@ -162,6 +165,34 @@
                 margin: .5rem 0;
             }
 
+            @media only screen and (min-width: 320px) {
+                header.header .title {
+                    font-size: 1.5rem;
+                }
+
+                header.header .menu .menu-item {
+                    font-size: 1rem;
+                }
+
+                .file-list {
+                    width: 90%;
+                }
+            }
+
+            @media only screen and (min-width: 768px), (min-width: 1224px) {
+                header.header .title {
+                    font-size: 3rem;
+                }
+
+                header.header .menu .menu-item {
+                    font-size: 1.5rem;
+                }
+
+                .file-list {
+                    width: 50%;
+                }
+            }
+
         </style>
     </head>
     <body>
@@ -201,11 +232,24 @@
         </div>
         <script src="/static/js/jquery-3.4.1.min.js"></script>
         <script>
+
+            // 트랜지션 효과 처리를 위한 변수 (setTimeout)
+            var activeTabTimeout1 = null;
+            var activeTabTimeout2 = null;
             
             // 탭 내용 변경 함수
             function activeTabContent (name) {
                 $('.content').addClass('hide');
-                $('#cheese_' + name).removeClass('hide');
+                clearTimeout(activeTabTimeout1);
+                clearTimeout(activeTabTimeout2);
+                activeTabTimeout1 = setTimeout(function () {
+                    $('.content.hide').addClass('gone');
+                    $('#cheese_' + name).removeClass('gone');
+                    
+                    activeTabTimeout2 = setTimeout(function () { 
+                        $('#cheese_' + name).removeClass('hide');
+                    }, 100);
+                }, 500);
             }
 
             // 상단 메뉴 이벤트 초기화
