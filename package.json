@@ -1,0 +1,17 @@
+{
+  "name": "cheese-download",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyangnyangpunch/DownloadPage.git"
+  },
+  "author": "Nyangnyangpunch",
+  "bugs": {
+    "url": "https://github.com/nyangnyangpunch/DownloadPage/issues"
+  },
+  "homepage": "https://github.com/nyangnyangpunch/DownloadPage#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
