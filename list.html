@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            치즈 배포 페이지
+        </title>
+        <meta charset="UTF-8">
+        <script src = "http://code.jquery.com/jquery-1.7.1.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+    <body>
+       <h3>파일 목록에 있는 파일명을 입력후 다운로드 하십시오.</h3>
+        <div>
+            <input type="text" id="txt">
+            <input type="button" value="fileDown" id="bin" onclick="getFileDown()">
+            <ul><h2><li>파일 목록</li></h2></ul>
+        </div>
+        <div id="list">
+            
+        </div>
+        <script>
+            window.onload = function(){
+                
+            }
+            function getFileDown(){
+                var txt = document.getElementById("txt");
+                window.location = '/download/' + txt.value;
+            }
+            $.ajax({
+                url: '/test',
+                dataType: 'JSON',
+                type: 'GET',
+                data: {
+                    msg: $('#msg').val()
+                },
+                success: function (list) {
+                    document.getElementById('list').innerHTML = list.data;
+                    console.log(list);
+                }
+            });
+        </script>
+    </body>
+</html>
